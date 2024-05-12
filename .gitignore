@@ -1,0 +1,16 @@
+
+# Ignore bytcode
+*.pyc
+*.pyo
+
+**/__pycache__/
+
+# Ignore directory with configuration files
+**/config/
+
+# Ignore directory with data and logs
+**/data/
+**/logs/
+
+# Ignore the directory with executables and modules (if any)
+**/bin/

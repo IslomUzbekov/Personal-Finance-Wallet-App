@@ -1,8 +1,8 @@
 import unittest
 from datetime import datetime
 
-from finance.io.controller import Controller
-from finance.io.models import Record
+from app.controller import Controller
+from app.models import Record
 
 
 class TestController(unittest.TestCase):
@@ -10,17 +10,17 @@ class TestController(unittest.TestCase):
         self.controller = Controller()
 
     def test_add_record(self):
-        record = Record(datetime.now(), 'income', 100, 'Test income')
+        record = Record(datetime.now(), 'доходы', 100, 'Тестирование: доходы')
         self.controller.add_record(record)
-        self.assertEqual(len(self.controller.records), 1)
+        self.assertEqual(len(self.controller._records), 1)
 
     def test_edit_record(self):
-        record = Record(datetime.now(), 'expense', 50, 'Test expense')
+        record = Record(datetime.now(), 'расходы', 50, 'Тестирование: расходы')
         self.controller.add_record(record)
-        new_record = Record(datetime.now(), 'income', 200, 'Updated income')
+        new_record = Record(datetime.now(), 'доходы', 200, 'Обновленный доход')
         self.controller.edit_record(0, new_record)
-        self.assertEqual(self.controller.records[0].category, 'income')
-        self.assertEqual(self.controller.records[0].amount, 200)
+        self.assertEqual(self.controller._records[0].category, 'Доходы')
+        self.assertEqual(self.controller._records[0].amount, 200)
 
 
 if __name__ == '__main__':
