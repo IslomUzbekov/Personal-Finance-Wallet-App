@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from .io.controller import Controller
-from .io.file_utils import FileUtils
-from .io.models import Record
+from src.io.controller import Controller
+from src.io.file_utils import FileUtils
+from src.io.models import Record
 
 
 def main():
@@ -10,7 +10,6 @@ def main():
     controller = Controller()
 
     # Загружаем данные из файла
-    # D:\Work\Coding\Projects\PersonalFinanceWalletApp\data\transactions.txt
     file_path = 'data/transactions.txt'
     controller.records = FileUtils.read_records_from_file(file_path)
 
@@ -68,31 +67,33 @@ def main():
                 category = 'income'
             else:
                 category = 'expense'
-            start_date_str = input('Введите начальную дату (ГГГГ-ММ-ДД) для \
-                поиска (оставьте пустой для любой): ')
-            end_date_str = input('Введите конечную  дату (ГГГГ-ММ-ДД) для \
-                поиска (оставьте пустой для любой): ')
-            min_amount_str = input('Введите минимальную сумму для поиска \
-                (оставьте пустым для любого): ')
-            max_amount_str = input('Введите максимальную сумму для поиска \
-                (оставьте пустым для любого): ')
+            date_str = input('Введите дату (ГГГГ-ММ-ДД) для \
+                             поиска (оставьте пустой для любой): ')
+            amount_str = input('Введите сумму для поиска \
+                               (оставьте пустым для любого): ')
+            # start_date_str = input('Введите начальную дату (ГГГГ-ММ-ДД) для \
+            #     поиска (оставьте пустой для любой): ')
+            # end_date_str = input('Введите конечную  дату (ГГГГ-ММ-ДД) для \
+            #     поиска (оставьте пустой для любой): ')
+            # min_amount_str = input('Введите минимальную сумму для поиска \
+            #     (оставьте пустым для любого): ')
+            # max_amount_str = input('Введите максимальную сумму для поиска \
+            #     (оставьте пустым для любого): ')
 
-            start_date = datetime.strptime(start_date_str, '%Y-%m-%d')\
-                if start_date_str else None
-            end_date = datetime.strptime(end_date_str, '%Y-%m-%d')\
-                if end_date_str else None
-            min_amount = float(min_amount_str)\
-                if min_amount_str else None
-            max_amount = float(max_amount_str)\
-                if max_amount_str else None
-            results = controller.search_records(
-                category,
-                start_date,
-                end_date,
-                min_amount,
-                max_amount
-            )
+            date = datetime.strptime(date_str, '%Y-%m-%d')
+            amount = float(amount_str)
+
+            # start_date = datetime.strptime(start_date_str, '%Y-%m-%d')\
+            #     if start_date_str else None
+            # end_date = datetime.strptime(end_date_str, '%Y-%m-%d')\
+            #     if end_date_str else None
+            # min_amount = float(min_amount_str)\
+            #     if min_amount_str else None
+            # max_amount = float(max_amount_str)\
+            #     if max_amount_str else None
+            results = controller.search_records(category, date, amount)
             print('\nРезультаты поиска:')
+
             for idx, record in enumerate(results):
                 print(f'{idx+1}. {record}')
 

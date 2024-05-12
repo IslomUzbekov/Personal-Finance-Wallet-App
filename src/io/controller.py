@@ -1,4 +1,4 @@
-# from datetime import datetime
+from datetime import datetime
 
 from .models import Record
 
@@ -18,24 +18,15 @@ class Controller:
         else:
             raise IndexError("Invalid index")
 
-    def search_records(
-            self,
-            category,
-            start_date,
-            end_date,
-            min_amount,
-            max_amount):
-
+    def search_records(self, category: str, date: datetime, amount: float):
         """Поиск записей по категории, дате и/или сумме."""
         results: list = []
 
-        for record in self.records:
-            if (category is None or record.category == category) and \
-               (start_date is None or record.date >= start_date) and \
-               (end_date is None or record.date <= end_date) and \
-               (min_amount is None or record.amount >= min_amount) and \
-               (max_amount is None or record.amount <= max_amount):
-                results.append(record)
+        for r in self.records:
+            if (category is None or r.category == category) and \
+               (date is None or r.date == date) and \
+               (amount is None or r.amount == amount):
+                results.append(r)
 
         return results
 
@@ -44,11 +35,11 @@ class Controller:
         incomes: float = 0
         expenses: float = 0
 
-        for record in self.records:
-            if record.category == 'income':
-                incomes = sum(record.amount)
-            elif record.category == 'expense':
-                expenses = sum(record.amount)
+        for r in self.records:
+            if r.category == 'income':
+                incomes = sum(r.amount)
+            elif r.category == 'expense':
+                expenses = sum(r.amount)
 
         balance = incomes - expenses
         return balance
