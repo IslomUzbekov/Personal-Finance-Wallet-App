@@ -34,7 +34,7 @@ def main():
         elif choice == '2':
             # Добавление новой записи
             # date = str(datetime.now().date())
-            date = datetime.date.today()
+            date = datetime.now()
             while True:
                 cat_str = input('Выберите категорию: Доход [д]/Расход [р]: ')
                 if cat_str == 'д':
@@ -56,7 +56,7 @@ def main():
             date_str = input('Введите дату (гггг-мм-дд) для редактирования: ')
             # date = date_str if date_str else str(datetime.now().date())
             date = datetime.strptime(date_str, '%Y-%m-%d').date() \
-                if date_str else datetime.date.today()
+                if date_str else datetime.now()
             while True:
                 cat_str = input('Выберите категорию: Доход [д]/Расход [р]: ')
                 if cat_str == 'д':
