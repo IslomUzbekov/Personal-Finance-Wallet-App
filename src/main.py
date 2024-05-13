@@ -10,7 +10,7 @@ def main():
     controller = Controller()
 
     # Загружаем данные из файла
-    file_path = 'data/records.txt'
+    file_path = '../data/records.csv'
     controller._records = FileUtils.read_records_from_file(file_path)
 
     print('Добро пожаловать!')
@@ -33,14 +33,15 @@ def main():
 
         elif choice == '2':
             # Добавление новой записи
-            date = datetime.now()
+            # date = str(datetime.now().date())
+            date = datetime.date.today()
             while True:
-                cat_str = input('Выберите категорию: доходы [д]/расходы [р]: ')
+                cat_str = input('Выберите категорию: Доход [д]/Расход [р]: ')
                 if cat_str == 'д':
-                    category = 'доходы'
+                    category = 'Доход'
                     break
                 elif cat_str == 'р':
-                    category = 'расходы'
+                    category = 'Расход'
                     break
             amount = float(input('Введите сумму: '))
             description = input('Введите описание: ')
@@ -52,14 +53,17 @@ def main():
         elif choice == '3':
             # Редактирование записи
             index = int(input('Введите индекс записи для редактирования: '))
-            date = datetime.now()
+            date_str = input('Введите дату (гггг-мм-дд) для редактирования: ')
+            # date = date_str if date_str else str(datetime.now().date())
+            date = datetime.strptime(date_str, '%Y-%m-%d').date() \
+                if date_str else datetime.date.today()
             while True:
-                cat_str = input('Выберите категорию: доходы [д]/расходы [р]: ')
+                cat_str = input('Выберите категорию: Доход [д]/Расход [р]: ')
                 if cat_str == 'д':
-                    category = 'доходы'
+                    category = 'Доход'
                     break
                 elif cat_str == 'р':
-                    category = 'расходы'
+                    category = 'Расход'
                     break
             amount = float(input('Введите сумму: '))
             description = input('Введите описание: ')
@@ -77,15 +81,15 @@ def main():
 
         elif choice == '5':
             # Поиск записей
-            cat_str = input('Выберите категорию: доходы [д]/расходы [р]: ')
-            date_str = input('Введите дату (дд-мм-гггг) для поиска '
+            cat_str = input('Выберите категорию: Доход [д]/Расход [р]: ')
+            date_str = input('Введите дату (гггг-мм-дд) для поиска '
                              '(оставьте пустой для любой): ')
             amount_str = input('Введите сумму для поиска '
                                '(оставьте пустым для любого): ')
 
-            category = 'доходы' if cat_str == 'д' else \
-                'расходы' if cat_str == 'р' else None
-            date = datetime.strptime(date_str, '%d, %m, %Y') \
+            category = 'Доход' if cat_str == 'д' else \
+                'Расход' if cat_str == 'р' else None
+            date = datetime.strptime(date_str, '%Y-%m-%d').date() \
                 if date_str else None
             amount = float(amount_str) \
                 if date_str else None

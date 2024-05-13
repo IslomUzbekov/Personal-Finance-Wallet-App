@@ -1,5 +1,5 @@
 import unittest
-from datetime import datetime
+from datetime import date
 
 from app.file_utils import FileUtils
 from app.models import Record
@@ -7,12 +7,14 @@ from app.models import Record
 
 class TestUtils(unittest.TestCase):
     def setUp(self):
-        self.file_path = 'data/records_test.txt'
+        '''Настройка тестового окружения перед выполнением каждого теста.'''
+        self.file_path = '../data/records_test.csv'
 
     def test_read_records_from_file(self):
+        '''Тест чтения записей из файла.'''
         expected_records = [
-            Record(datetime(2024, 5, 12), 'доходы', 1000, 'Зарплата'),
-            Record(datetime(2024, 5, 11), 'расходы', 50, 'Товары')
+            Record(date(2024, 5, 12), 'Доход', 1000, 'Зарплата'),
+            Record(date(2024, 5, 11), 'Расход', 50, 'Товары')
         ]
         records = FileUtils.read_records_from_file(self.file_path)
         self.assertEqual(len(records), 2)
@@ -23,9 +25,10 @@ class TestUtils(unittest.TestCase):
             )
 
     def test_write_records_to_file(self):
+        '''Тест записи записей в файл.'''
         records = [
-            Record(datetime(2024, 5, 12), 'доходы', 1000, 'Зарплата'),
-            Record(datetime(2024, 5, 11), 'расходы', 50, 'Товары')
+            Record(date(2024, 5, 12), 'Доход', 1000, 'Зарплата'),
+            Record(date(2024, 5, 11), 'Расход', 50, 'Товары')
         ]
         FileUtils.write_records_to_file(records, self.file_path)
         read_records = FileUtils.read_records_from_file(self.file_path)
